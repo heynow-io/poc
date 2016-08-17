@@ -7,6 +7,7 @@ import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -17,8 +18,8 @@ public class EventController {
     private final Source source;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void tick() {
+    public void tick(@RequestParam("data") String data) {
         log.info("Tick");
-        source.output().send(MessageBuilder.withPayload("hello").build());
+        source.output().send(MessageBuilder.withPayload(data).build());
     }
 }
